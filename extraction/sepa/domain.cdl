@@ -1,0 +1,86 @@
+type TEXT
+end
+
+type DECIMAL
+end
+
+type DATE
+end
+
+type DATETIME
+end
+
+type MONEY_EUR
+  amount: DECIMAL where amount >= 0
+  currency: TEXT where currency == "EUR"
+end
+
+type SEPA_PAYMENT_REQUEST
+  debtor_iban: TEXT
+  creditor_iban: TEXT
+  amount: MONEY_EUR
+  remittance_info: TEXT
+  execution_date: DATE
+end
+
+type SEPA_PAYMENT_RESPONSE
+  payment_id: TEXT
+  status: TEXT
+  processing_date: DATETIME
+end
+
+intent PROCESS_SEPA_PAYMENT
+  goal: "Process a SEPA credit transfer payment"
+  inputs: "[debtor_iban: TEXT, creditor_iban: TEXT, amount: MONEY_EUR, remittance_info: TEXT, execution_date: DATE]"
+  outputs: "[payment_id: TEXT, status: TEXT, processing_date: DATETIME]"
+  evidence: "[EX_SEPA_005]"
+  status: "candidate"
+  tags: "[banking, sepa, payment]"
+end
+
+rule IBAN_MUST_BE_VALID
+  statement: "Both debtor and creditor IBANs must be valid"
+  applies_to: "PROCESS_SEPA_PAYMENT"
+  priority: "unspecified"
+  exception: "unspecified"
+  fallback: "unspecified"
+  evidence: "[EX_SEPA_006]"
+  confidence: "candidate"
+  category: "validation"
+end
+
+rule AMOUNT_WITHIN_LIMITS
+  statement: "Payment amount must be between 0.01 EUR and 1000000 EUR inclusive"
+  applies_to: "PROCESS_SEPA_PAYMENT"
+  priority: "unspecified"
+  exception: "unspecified"
+  fallback: "reject when outside the stated limits"
+  evidence: "[EX_SEPA_008]"
+  confidence: "candidate"
+  category: "business"
+end
+
+rule SAME_CURRENCY_REQUIRED
+  statement: "SEPA payment currency must be EUR"
+  applies_to: "PROCESS_SEPA_PAYMENT"
+  priority: "unspecified"
+  exception: "unspecified"
+  fallback: "reject when currency is not EUR"
+  evidence: "[EX_SEPA_010]"
+  confidence: "candidate"
+  category: "regulatory"
+end
+
+policy GDPR_DATA_MINIMIZATION
+  statement: "Only necessary personal data may be processed"
+  applies_to: "PROCESS_SEPA_PAYMENT"
+  scope: "data processing"
+  evidence: "[EX_SEPA_011]"
+  confidence: "candidate"
+  category: "privacy"
+end
+
+mapping PROCESS_SEPA_PAYMENT -> "api POST /api/sepa/payments"
+  request: "SEPA_PAYMENT_REQUEST"
+  response: "SEPA_PAYMENT_RESPONSE"
+end

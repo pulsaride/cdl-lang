@@ -78,7 +78,7 @@ Start with simpler examples and progress to complex ones:
 
 - **Issues**: Report problems with examples
 - **Discussions**: Share your own examples
-- **Documentation**: Check [cdl-lang docs](https://lsalihi.github.io/cdl-lang/)
+- **Documentation**: Check [cdl-lang docs](https://pulsaride.github.io/cdl-lang/)
 
 ---
 

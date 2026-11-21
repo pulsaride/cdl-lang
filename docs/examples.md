@@ -1,6 +1,8 @@
 # Examples
 
-## Type Definitions (v0.6.0)
+Examples marked **executable v0.6** can be passed directly to the current CLI. Files containing Markdown prose and fenced CDL are documentation examples, not direct compiler inputs.
+
+## Minimal payment — executable v0.6
 
 ```cdl
 type Money
@@ -8,147 +10,87 @@ type Money
   currency: string
 end
 
+type PaymentRequest
+  amount: Money
+  account: string
+end
+
+type PaymentResponse
+  id: string
+  status: string
+end
+
+intent PAYMENT_INTENT
+  goal: "Process a payment"
+  inputs: "[amount: Money, account: string]"
+  outputs: "[id: string]"
+  evidence: "[legacy_code]"
+  tags: "[finance]"
+end
+
+mapping PAYMENT_INTENT -> "api POST /api/payments"
+  request: "PaymentRequest"
+  response: "PaymentResponse"
+end
+```
+
+This corresponds to the structure in [`sample.cdl`](https://github.com/pulsaride/cdl-lang/blob/master/sample.cdl).
+
+## Customer validation — executable v0.6
+
+```cdl
 type Customer
   id: string
   name: string where length(name) >= 2
   email: Email
   age: int where age >= 18
 end
-```
 
-## Typed Intent
-
-```cdl
 intent CREATE_CUSTOMER
   goal: "Create a new customer account"
   inputs: "[customer: Customer]"
-  outputs: "[customerId: string, welcomeEmail: string]"
+  outputs: "[customerId: string]"
   evidence: "[customer_registration_policy]"
   tags: "[customer, registration]"
 end
 ```
 
-## Complex Types with Constraints
+OpenAPI generation requires a mapping and request/response types. The current compiler only applies limited string-based constraint checks, so this demonstrates accepted syntax rather than complete semantic verification.
 
-```cdl
-type Order
-  id: string
-  customerId: string
-  items: OrderItem
-  totalAmount: Money where totalAmount.amount > 0
-  orderDate: date
-  deliveryDate: date where deliveryDate >= orderDate
-end
-
-type OrderItem
-  productId: string
-  quantity: int where quantity > 0 and quantity <= 100
-  unitPrice: Money
-  discount: decimal where discount >= 0.0 and discount <= 0.5
-end
-```
-
-## Business Rules
+## Business rule metadata — limited v0.6
 
 ```cdl
 rule CUSTOMER_AGE_VALIDATION
   statement: "Customer must be of legal age"
   applies_to: "CREATE_CUSTOMER"
   evidence: "[gdpr_age_verification]"
-  test_hints: "Age < 18 should be rejected"
-  type: "validation"
-end
-
-rule ORDER_TOTAL_LIMIT
-  statement: "Order total cannot exceed €100,000"
-  applies_to: "CREATE_ORDER"
-  evidence: "[fraud_prevention_policy]"
-  test_hints: "Test with orders over limit"
-  type: "business"
+  test_hints: "Age below 18 should be rejected"
+  category: "validation"
 end
 ```
 
-## API Mapping
+The rule parses, but `applies_to`, evidence and `test_hints` are not resolved or executed semantically.
 
-```cdl
-mapping CREATE_CUSTOMER -> "api POST /api/customers"
-  request: "CustomerRegistrationRequest"
-  response: "CustomerRegistrationResponse"
-end
+## Proposed examples
 
-mapping CREATE_ORDER -> "api POST /api/orders"
-  request: "OrderRequest"
-  response: "OrderResponse"
-end
-```
+The following require future structured expressions, SIR or adapters and must not be copied as current executable syntax:
 
-## Generated OpenAPI
+- Java business-rule extraction.
+- Order discount calculation with typed decision rules.
+- Financial profitability and consolidation.
+- Currency and unit compatibility.
+- Semantic dependency and impact analysis.
+- Rule evolution across specification versions.
+- Synthetic TM1 modernization.
+- V4 implementation conformance and V5 legacy parity.
 
-From the customer example:
+See [Java Modernization](java-modernization.md), [TM1 Modernization](tm1-modernization.md), and [Roadmap](roadmap.md) for status and boundaries.
 
-```yaml
-openapi: 3.0.0
-info:
-  title: Customer API
-  version: 1.0.0
+## Repository examples
 
-paths:
-  /api/customers:
-    post:
-      summary: Create a new customer account
-      operationId: createCustomer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomerRegistrationRequest'
-      responses:
-        '200':
-          description: Customer created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomerRegistrationResponse'
+- [`example.cdl`](https://github.com/pulsaride/cdl-lang/blob/master/example.cdl) — plain CDL payment example.
+- [`sample.cdl`](https://github.com/pulsaride/cdl-lang/blob/master/sample.cdl) — minimal plain CDL example.
+- [`extraction/sepa/domain.cdl`](https://github.com/pulsaride/cdl-lang/blob/master/extraction/sepa/domain.cdl) — candidate synthetic SEPA extraction requiring human approval.
+- [`examples/banking/sepa-payment.cdl`](https://github.com/pulsaride/cdl-lang/blob/master/examples/banking/sepa-payment.cdl) — Markdown-wrapped example; extract the fenced block before compilation.
 
-components:
-  schemas:
-    Customer:
-      type: object
-      required:
-        - id
-        - name
-        - email
-        - age
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          minLength: 2
-        email:
-          type: string
-          format: email
-        age:
-          type: integer
-          minimum: 18
-
-    CustomerRegistrationRequest:
-      type: object
-      required:
-        - customer
-      properties:
-        customer:
-          $ref: '#/components/schemas/Customer'
-
-    CustomerRegistrationResponse:
-      type: object
-      required:
-        - customerId
-        - welcomeEmail
-      properties:
-        customerId:
-          type: string
-        welcomeEmail:
-          type: string
-```
+Do not treat synthetic examples or candidate extraction as approved business requirements.

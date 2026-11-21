@@ -9,7 +9,7 @@ test_case() {
     local case_num=$1
     echo "Testing case${case_num}..."
     ./gradlew jar -q
-    java -jar build/libs/cdl-1.0-SNAPSHOT.jar gen openapi -i ctk/case${case_num}/cdl -o /tmp/case${case_num}.yaml
+    java -jar build/libs/cdl-0.7.0.jar gen openapi -i ctk/case${case_num}/cdl -o /tmp/case${case_num}.yaml
     if diff -u ctk/case${case_num}/openapi.yaml /tmp/case${case_num}.yaml; then
       echo "CTK case${case_num}: PASS"
     else

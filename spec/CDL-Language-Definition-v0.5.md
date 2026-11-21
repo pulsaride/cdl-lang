@@ -4,7 +4,7 @@
 
 **Version:** 0.5.0 (MVP) - October 2025  
 **License:** Apache 2.0  
-**Specification:** https://github.com/lsalihi/cdl-lang/tree/main/spec
+**Specification:** https://github.com/pulsaride/cdl-lang/tree/master/spec
 
 ## Overview
 
@@ -275,4 +275,4 @@ This specification can generate:
 
 **Authors:** Pulsaride Team  
 **Contact:** salihi.lyazid@pulsaride.com  
-**Repository:** https://github.com/lsalihi/cdl-lang
+**Repository:** https://github.com/pulsaride/cdl-lang

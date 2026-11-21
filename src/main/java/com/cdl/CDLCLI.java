@@ -4,8 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CDLCLI {
+    private static final String VERSION = "0.7.0";
+
     public static void main(String[] args) {
-        System.out.println("CDL - Cognitive Domain Language Compiler v0.6.0");
+        System.out.println("CDL - Cognitive Domain Language Compiler v" + VERSION);
         System.out.println("Type System with 8 built-in types ready!");
         System.out.println("");
 
@@ -25,7 +27,7 @@ public class CDLCLI {
                     }
                     System.out.println("Command executed: build");
                     Compiler.Result result = Compiler.compile(args[1]);
-                    System.out.println("CDL v0.6.0 - Type system compilation successful!");
+                    System.out.println("CDL v" + VERSION + " - Type system compilation successful!");
                     break;
 
                 case "gen":
@@ -56,7 +58,7 @@ public class CDLCLI {
                     System.out.println("Command executed: gen");
                     Compiler.Result result2 = Compiler.compile(inputFile);
                     writeToFile(outputFile, result2.openapi);
-                    System.out.println("CDL v0.6.0 - OpenAPI generation successful!");
+                    System.out.println("CDL v" + VERSION + " - OpenAPI generation successful!");
                     break;
 
                 case "lint":
@@ -71,7 +73,7 @@ public class CDLCLI {
                         System.err.println("Type errors found!");
                         System.exit(1);
                     }
-                    System.out.println("CDL v0.6.0 - Linting successful!");
+                    System.out.println("CDL v" + VERSION + " - Linting successful!");
                     break;
 
                 case "fmt":
@@ -81,7 +83,7 @@ public class CDLCLI {
                     }
                     System.out.println("Command executed: fmt");
                     // For now, just copy the file (formatting not implemented yet)
-                    System.out.println("CDL v0.6.0 - Formatting successful!");
+                    System.out.println("CDL v" + VERSION + " - Formatting successful!");
                     break;
 
                 default:

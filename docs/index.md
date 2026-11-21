@@ -1,59 +1,83 @@
-# CDL - Cognitive Domain Language
+# CDL — Compile your business specifications
 
-A DSL for defining business logic in a declarative, traceable, and executable way.
+**An open-source semantic specification compiler for Spec-Driven Development and AI-assisted software engineering.**
 
-## What is CDL?
+> **From business intent to verifiable software.**
 
-CDL (Cognitive Domain Language) allows you to describe business intents, rules, policies, and flows with metadata for evidence and trust. It's designed for executable specifications that can generate APIs, policies, and tests.
+CDL is evolving from a v0.6-era domain language into a deterministic semantic core for AI-driven software engineering. The semantic core is the intended product; native CDL syntax, structured inputs, Markdown interfaces and agent integrations are ways to interact with it.
 
-## Key Features
+!!! note "Current maturity"
+    The published repository still contains the v0.6 compiler baseline. SIR, semantic diff, dependency impact, JSON/YAML normalization, Markdown-embedded CDL and reference evaluation are roadmap capabilities, not released features. See [Supported Capabilities](capabilities.md).
 
-- **Parser**: ANTLR-based lexer and parser for CDL syntax
-- **AST Builder**: Constructs abstract syntax tree
-- **Symbol Table**: Detects duplicate IDs
-- **Type Checker**: Basic validation of meta values
-- **IR Generation**: Intermediate representation
-- **OpenAPI Backend**: Generates API specs from intents/mappings
-- **Rego Backend**: Generates OPA policies
-- **Linter**: Checks for errors with codes
-- **Formatter**: Consistent style formatting
-- **CLI**: Unified command-line interface
+## Three objectives
 
-## Quick Start
+### Semantic integrity
+
+Validate explicit types, references, constraints and domain relationships deterministically wherever semantics are fully defined.
+
+### Semantic evolution
+
+Identify changed meaning, dependencies and transitive impact as specifications evolve, without requiring an AI model to reconstruct the domain.
+
+### Behavioral conformance
+
+Link approved specifications to independent implementation tests and observed results. Compilation and test coverage do not establish complete legacy equivalence by themselves.
+
+## Complements Markdown SDD
+
+CDL does not replace existing Markdown specifications, plans or tasks. A team can progressively formalize selected business rules while retaining Markdown for rationale and communication:
+
+```text
+Markdown SDD
+  -> Formalized business rules
+  -> CDL semantic compilation
+  -> Implementation
+  -> Independent verification
+```
+
+AI tools may help extract candidates and generate supported specifications. CDL provides deterministic analysis after the knowledge is explicit; humans retain authority over business meaning.
+
+## Verified today
+
+- ANTLR parser for v0.6 CDL blocks.
+- AST construction and top-level symbol collection.
+- Limited type-name, constraint and type-cycle checks.
+- OpenAPI text generation exercised by 10 golden CTK cases.
+- Experimental Rego output for method/path allow rules.
+- CLI build, OpenAPI generation and lint entry points.
+- VS Code syntax-highlighting extension.
+
+The formatter command is not a complete formatter, the internal IR is lossy, and general semantic validation is not yet available. Read the [capability matrix](capabilities.md) before choosing a feature.
+
+## Start locally
 
 ```bash
-# Clone the repo
-git clone https://github.com/lsalihi/cdl-lang.git
+git clone https://github.com/pulsaride/cdl-lang.git
 cd cdl-lang
-
-# Build
-./gradlew build
-
-# Run demo
-./demo.sh
-
-# Use CLI
-java -cp build/classes/java/main:antlr-4.13.1-complete.jar com.cdl.CDLCLI gen openapi -i sample.cdl -o api.yaml
+./gradlew clean build
+./build/install/cdl-lang/bin/cdl-lang gen openapi sample.cdl /tmp/sample.openapi.yaml
 ```
 
-## Installation
-
-### Docker
+To create the install distribution:
 
 ```bash
-docker run --rm -v "$PWD":/w ghcr.io/lsalihi/cdl-lang:latest \
-  cdl gen openapi -i /w/sample.cdl -o /w/api.yaml
+./gradlew installDist
 ```
 
-### Local Build
+The organization-scoped container `ghcr.io/pulsaride/cdl-lang` has not yet been verified as published, so installation documentation does not present it as an available image. Container migration and publishing require separate approval.
 
-```bash
-./gradlew build
-java -cp build/classes/java/main:antlr-4.13.1-complete.jar com.cdl.CDLCLI --help
-```
+## Explore the project
+
+- [Getting Started](quickstart.md)
+- [Concepts](concepts.md)
+- [v0.6 Language Reference](spec.md)
+- [Supported Capabilities](capabilities.md)
+- [Compiler Architecture](architecture.md)
+- [Roadmap](roadmap.md)
 
 ## Community
 
-- [GitHub Repository](https://github.com/lsalihi/cdl-lang)
-- [Issues](https://github.com/lsalihi/cdl-lang/issues)
-- [Discussions](https://github.com/lsalihi/cdl-lang/discussions)
+- [Repository](https://github.com/pulsaride/cdl-lang)
+- [Issues](https://github.com/pulsaride/cdl-lang/issues)
+- [Discussions](https://github.com/pulsaride/cdl-lang/discussions)
+- [Contributing](contributing.md)

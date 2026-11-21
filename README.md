@@ -1,132 +1,67 @@
-# CDL — Cognitive Domain Language
+# CDL — Compile your business specifications
 
-[![CI](https://github.com/lsalihi/cdl-lang/actions/workflows/ci.yml/badge.svg)](https://github.com/lsalihi/cdl-lang/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/lsalihi/cdl-lang/branch/main/graph/badge.svg)](https://codecov.io/gh/lsalihi/cdl-lang)
-[![CTK](https://img.shields.io/badge/CTK-10%20tests-passing)](https://github.com/lsalihi/cdl-lang/tree/main/ctk)
+[![CI](https://github.com/pulsaride/cdl-lang/actions/workflows/ci.yml/badge.svg)](https://github.com/pulsaride/cdl-lang/actions/workflows/ci.yml)
+[![CTK](https://img.shields.io/badge/CTK-10%20tests-passing)](ctk)
 
-A DSL for defining business logic in a declarative, traceable, and executable way.
+CDL is evolving from its v0.6 compiler baseline into a Semantic Specification Compiler for Spec-Driven Development and AI-assisted software engineering.
 
-## Quick Demo
+> From business intent to verifiable software.
 
-```bash
-./demo.sh
-```
+## v0.7.0 status
 
-This builds, generates IR/OpenAPI, lints, and formats.
+v0.7.0 is the strategic foundation release. It preserves the existing ANTLR parser, AST, limited symbol/type checks, internal IR and OpenAPI golden-output behavior while documenting the SIR-first architecture and CDL 2.0 roadmap.
 
-## Features
+It does not claim that structured semantic expressions, semantic diff, reference evaluation, impact analysis or behavioral verification are implemented.
 
-- **Parser**: ANTLR-based lexer and parser for CDL syntax with type system support.
-- **AST Builder**: Constructs abstract syntax tree from parse tree with type information.
-- **Symbol Table**: Detects duplicate IDs across all definitions.
-- **Type Checker**: Comprehensive validation of types, constraints, and references.
-- **IR Generation**: Intermediate representation from AST with full type metadata.
-- **OpenAPI Generator**: Generates OpenAPI 3.0 specs from intents with type-safe schemas.
-- **Rego Generator**: Generates OPA Rego policies from mappings.
-- **Linter**: Checks for errors, duplicates, and type violations with detailed error codes.
-- **Formatter**: Formats CDL files with consistent style.
-- **Compiler Pipeline**: End-to-end compilation from CDL to multiple backends.
+## Verified capabilities
 
-### Type System (v0.6.0)
-- **Type Definitions**: Custom types with field constraints
-- **Built-in Types**: `string`, `int`, `decimal`, `bool`, `date`, `datetime`, `Email`, `Money`
-- **Type References**: Strong typing for intent inputs/outputs
-- **Validation**: Compile-time type checking and circular reference detection
+- ANTLR parsing and AST construction.
+- Limited duplicate/type-name, type-cycle and string-based constraint checks.
+- Internal types/intents/mappings IR.
+- OpenAPI text generation covered by 10 CTK cases.
+- Experimental method/path Rego placeholder.
+- CLI, Gradle distribution and VS Code syntax-highlighting extension.
 
-## Roadmap
+See [the capability matrix](docs/capabilities.md), [architecture](ARCHITECTURE.md), and [roadmap](ROADMAP.md).
 
-### v0.7.0 - Advanced Types & Modules
-- **Union Types**: `string | int` for flexible type definitions
-- **Generic Types**: Parameterized types like `List<Customer>`, `Map<string, User>`
-- **Modules**: Namespace support for large-scale projects
-- **Type Aliases**: Named type aliases for better readability
-
-### v0.8.0 - Runtime & Execution
-- **Runtime Engine**: Execute CDL specifications directly
-- **Database Integration**: Type-safe data persistence
-- **Event Processing**: Reactive programming support
-- **REST API Runtime**: Auto-generated REST endpoints
-
-### v1.0.0 - Enterprise Features
->>>>>>> aa659f6 (fix: Correct ASTBuilder.java missing currentFields variable and update README)
-- **Multi-language Support**: Bindings for Python, Go, Rust
-- **Distributed Execution**: Cluster support for high availability
-- **Security Policies**: Built-in authentication and authorization
-- **Monitoring & Observability**: Metrics and tracing integration
-
-## Docker Usage
-
-The easiest way to use CDL is through Docker:
+## Quick start
 
 ```bash
-# Pull the latest image
-docker pull ghcr.io/lsalihi/cdl-lang:v0.6.0
-
-# Build a CDL file
-docker run --rm -v $(pwd):/workspace ghcr.io/lsalihi/cdl-lang:v0.6.0 \
-  build /workspace/myfile.cdl
-
-# Generate OpenAPI specification
-docker run --rm -v $(pwd):/workspace ghcr.io/lsalihi/cdl-lang:v0.6.0 \
-  gen openapi /workspace/myfile.cdl /workspace/api.yaml
-
-# Lint for type errors
-docker run --rm -v $(pwd):/workspace ghcr.io/lsalihi/cdl-lang:v0.6.0 \
-  lint /workspace/myfile.cdl
-
-# Format CDL code
-docker run --rm -v $(pwd):/workspace ghcr.io/lsalihi/cdl-lang:v0.6.0 \
-  fmt /workspace/myfile.cdl
+./gradlew clean build installDist
+./build/install/cdl-lang/bin/cdl-lang lint sample.cdl
+./build/install/cdl-lang/bin/cdl-lang gen openapi sample.cdl /tmp/sample.openapi.yaml
 ```
 
-### Docker Images
-- `ghcr.io/lsalihi/cdl-lang:v0.6.0` - Latest stable with type system
-- `ghcr.io/lsalihi/cdl-lang:latest` - Rolling updates
+The parser currently emits diagnostics but may recover from malformed input; inspect stderr and do not treat the success banner as complete validation.
 
->>>>>>> aa659f6 (fix: Correct ASTBuilder.java missing currentFields variable and update README)
-## Build
+## Container status
 
-```bash
-gradle build
-```
+`ghcr.io/pulsaride/cdl-lang` is the intended official namespace, but no organization-scoped image is published by this release preparation. Use the local build until publication approval and manifest verification.
 
-```bash
-java -cp build/classes/java/main:antlr-4.13.1-complete.jar com.cdl.CDLCLI <command>
-```
+See [repository migration](governance/REPOSITORY-MIGRATION.md).
 
-Commands:
-- `cdl build -i <input.cdl> -o <output.ir.json>` - Parse and validate CDL file
-- `cdl gen openapi -i <input.cdl> -o <output.yaml>` - Generate OpenAPI specification
-- `cdl fmt -i <input.cdl> [-o <output.cdl>]` - Format CDL code
-- `cdl lint -i <input.cdl>` - Lint for errors and type violations
+## Verified CLI forms
 
-### Linter Features (v0.6.0)
-- **Type Validation**: Checks type definitions, constraints, and references
-- **Circular Reference Detection**: Prevents infinite type dependencies
-- **Constraint Validation**: Validates `where` clause expressions
-- **Intent Type Checking**: Ensures input/output types are properly defined
-- **Error Codes**: Structured error reporting (E001-E007)
+- `cdl-lang build <input.cdl>`
+- `cdl-lang gen openapi <input.cdl> <output.yaml>`
+- `cdl-lang gen openapi -i <input.cdl> -o <output.yaml>`
+- `cdl-lang lint <input.cdl>`
+- `cdl-lang fmt <input.cdl>` — placeholder/no-op
 
-Run linting:
-```bash
-cdl lint myfile.cdl
-# Returns exit code 1 if errors found, 0 if clean
-```
+`build` does not write an IR file. `lint` and `fmt` do not support `-i/-o` forms.
 
-## Conformance Test Kit (CTK)
-
-Run CTK to verify backends:
+## Compatibility verification
 
 ```bash
 ./test_ctk.sh
 ```
 
-This ensures generated OpenAPI matches expected outputs.
+The CTK verifies 10 generated OpenAPI golden outputs; it is not a complete language-semantic or behavioral test suite.
 
-## Examples
+## Documentation
 
-See `sample.cdl`, `example.cdl`, `rule_example.cdl`
-
-## Grammar
-
-See `src/main/antlr/CDL.g4`
+- [Published documentation](https://pulsaride.github.io/cdl-lang/)
+- [v0.6 language reference](docs/spec.md)
+- [CLI and Java API](docs/api.md)
+- [Examples](docs/examples.md)
+- [Contributing](CONTRIBUTING.md)

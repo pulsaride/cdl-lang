@@ -1,143 +1,80 @@
 # CDL Vision
 
-## The Cognitive Domain Language
+## The Semantic Specification Compiler
 
-**CDL is a universal declarative language for expressing, structuring, and executing business logic and cognitive knowledge across all domains and technologies.**
+**CDL is an open-source Semantic Specification Compiler for AI-driven software engineering.** It adds deterministic semantic validation, dependency analysis, specification evolution, traceability and behavioral verification to existing development practices.
 
-## Core Philosophy
+> **From business intent to verifiable software.**
 
-In an increasingly complex world of distributed systems, AI, and regulatory requirements, organizations struggle to maintain consistency between:
+The fundamental product is the semantic core, not the CDL syntax.
 
-- **Business Intent**: What the system should do
-- **Technical Implementation**: How it's built
-- **Documentation**: How it's explained
-- **Compliance**: What rules it must follow
-- **Testing**: How correctness is verified
+## The Model
 
-CDL bridges this gap by providing a **single source of truth** that can be understood by business stakeholders, developers, auditors, and machines.
+- AI discovers and interprets candidate business knowledge.
+- CDL formalizes and validates approved knowledge.
+- Humans approve business meaning.
+- AI coding agents implement approved specifications.
+- Executable tests independently verify behavior.
 
-## The Problem CDL Solves
+CDL must provide meaningful engineering value without calling an LLM.
 
-### Current State
-- Business logic scattered across code, docs, and databases
-- Inconsistencies between specification and implementation
-- Manual translation between business requirements and technical artifacts
-- Lack of executable documentation
-- Regulatory compliance buried in code comments
+## Problems CDL Addresses
 
-### CDL Solution
-- **Declarative**: Express business logic in natural, readable terms
-- **Executable**: Generate APIs, policies, tests from single source
-- **Universal**: Works across domains (finance, healthcare, AI, etc.)
-- **Evolvable**: Type-safe, versioned, backward-compatible
-- **Governed**: Open standard with community oversight
+- Business rules are scattered across Markdown, code, databases and legacy platforms.
+- Natural-language specifications drift from implementation and tests.
+- Renaming or changing a rule does not reveal all transitive consequences.
+- Typed relationships, units, currencies and dependencies are often checked manually.
+- Generated technical artifacts are not reliably tied to approved semantics or evidence.
+- Test success is confused with proof of complete behavioral equivalence.
 
-## Vision Statement
+## Product Principles
 
-**To become the universal language for cognitive domain modeling, enabling organizations to express their business logic once and execute it everywhere.**
+### 1. SIR Is the Central Contract
 
-## Key Principles
+A versioned Semantic Intermediate Representation (SIR) normalizes native CDL, versioned JSON and versioned YAML. CDL syntax remains a first-class authoring format but is not mandatory when equivalent structured input has the same semantics.
 
-### 1. Cognitive Clarity
-CDL prioritizes human understanding over machine optimization. Code should read like documentation.
+### 2. Deterministic Before Interpretive
 
-### 2. Universal Applicability
-No assumptions about technology stack, industry, or use case. CDL works for APIs, policies, AI models, and business processes.
+Symbol resolution, type checking, expression validation, reference checks, dependency construction, semantic diff, impact analysis, evidence validation and drift checks operate deterministically. Ambiguous interpretation is explicitly escalated for AI-assisted analysis or human approval.
 
-### 3. Executable Specifications
-CDL files are both human-readable documentation and machine-executable code.
+### 3. Markdown Is an Interface, Not a Replacement Target
 
-### 4. Strong Governance
-Open standard with clear evolution process, ensuring long-term stability and interoperability.
+CDL complements existing Markdown-based Spec-Driven Development, plans, tasks, agents and CI/CD. Markdown remains useful for human communication and can be generated or enriched only under explicit artifact ownership rules.
 
-### 5. Ecosystem First
-CDL succeeds through a rich ecosystem of tools, integrations, and community contributions.
+### 4. Humans Retain Semantic Authority
 
-## Target Audience
+No tool, model or generator silently changes approved business meaning. Candidate semantics, legacy interpretations and AI-generated extraction remain provisional until approved.
 
-### Business Stakeholders
-- Product managers defining requirements
-- Compliance officers documenting regulations
-- Auditors verifying system behavior
-- Domain experts capturing business rules
+### 5. Verification Is Independent
 
-### Technical Teams
-- Architects designing systems
-- Developers implementing features
-- DevOps engineers deploying infrastructure
-- QA engineers creating test suites
+Compiler validation, test execution and proven properties are distinct outcomes. Coverage supports confidence and prioritization; it does not establish complete behavioral equivalence.
 
-### Organizations
-- Financial institutions managing regulatory compliance
-- Healthcare providers ensuring data privacy
-- AI companies governing model behavior
-- Government agencies automating policy execution
+### 6. Technology Independence
 
-## Long-term Impact
+The generic semantic core is independent of AI models, coding agents, legacy systems and target frameworks. TM1, OpenAPI, policy engines and agent integrations are adapters around the core.
 
-### Industry Transformation
-- **Standardization**: Common language for business logic across industries
-- **Interoperability**: Systems can understand each other's business rules
-- **Compliance**: Automated verification of regulatory requirements
-- **Innovation**: Faster development of cognitive systems
+## Initial Flagship Use Case
 
-### Technical Evolution
-- **AI Integration**: Natural language for AI system specifications
-- **Policy as Code**: Governance and security as first-class concepts
-- **Executable Documentation**: Living specifications that stay current
-- **Cross-system Consistency**: Unified business logic across microservices
+IBM Planning Analytics TM1 modernization is the first reference use case. Development starts with synthetic financial planning models and deterministic extraction from metadata and source evidence. TM1 interpretation, unsupported formulas, uncertainty and behavioral evidence remain explicit. No confidential company data or credentials belong in the public repository.
 
-## Success Metrics
+The generic semantic compiler must demonstrate value before extensive TM1 extraction infrastructure is built.
 
-### Adoption Metrics
-- **Market Penetration**: Percentage of enterprise systems using CDL
-- **Ecosystem Size**: Number of third-party tools and integrations
-- **Community Growth**: Active contributors and user organizations
+## Success Criteria
 
-### Technical Metrics
-- **Language Stability**: Backward compatibility across major versions
-- **Performance**: Compilation and generation speeds
-- **Expressiveness**: Ability to model complex business domains
+CDL succeeds when teams can:
 
-### Business Metrics
-- **Time to Market**: Reduction in development cycles
-- **Compliance Efficiency**: Automated regulatory verification
-- **System Reliability**: Reduction in business logic errors
+- Validate structured business semantics without an AI model.
+- Detect undefined references, invalid expression types, incompatible currencies or units, prohibited cycles and conflicting supported constraints.
+- Compare specification versions and identify direct and transitive impact.
+- Generate bounded context for coding agents from approved semantics and evidence.
+- Trace approved requirements to implementations, verification obligations, executable tests and observed results.
+- Detect generated-artifact drift and missing verification.
+- Integrate these checks into existing SDD and CI/CD workflows.
 
-## Relationship to Other Standards
+## Relationship to Standards and Tools
 
-### Complementary Standards
-- **OpenAPI**: CDL generates OpenAPI specs, doesn't replace them
-- **JSON Schema**: Used for type definitions within CDL
-- **Rego**: Target for policy generation
-- **SQL**: Complements but doesn't replace data querying
+CDL complements rather than replaces OpenAPI, JSON Schema, Gherkin, OPA/Rego, CUE, TypeSpec and model/formal specification approaches. Competitive validation must test structured YAML/JSON plus conventional tooling against CDL, including cases where simpler formats are sufficient.
 
-### Positioning
-CDL sits at the **business logic layer**, above technical implementation details but below natural language requirements. It serves as the bridge between human intent and machine execution.
+## Governance
 
-## Governance and Evolution
-
-### Open Standard
-- **Public Specification**: Freely available, Apache 2.0 licensed
-- **Community Driven**: RFC process for changes
-- **Vendor Neutral**: No single company controls the standard
-
-### Version Strategy
-- **Semantic Versioning**: Breaking.Major.Minor
-- **Long-term Support**: 2-year LTS for major versions
-- **Deprecation Policy**: Clear migration paths
-
-### Ecosystem Development
-- **Reference Implementations**: Official parsers and generators
-- **Third-party Tools**: IDE plugins, converters, validators
-- **Training and Certification**: For implementers and users
-
-## Call to Action
-
-CDL represents a fundamental shift in how we think about software systems - from code-centric to cognition-centric development.
-
-**Join us in building the future of declarative business logic.**
-
----
-
-*This vision guides CDL's development and will evolve with community input and technological advancements.*
+CDL remains open-source under Apache License 2.0. Public evolution follows backward compatibility, explicit migration and human approval gates. Major grammar changes, compiler replacement, public SIR commitments, new runtime dependencies, external TM1 connections, complete calculation engines and benchmark publication require review.

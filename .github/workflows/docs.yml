@@ -1,10 +1,11 @@
 name: docs
 on:
+  pull_request:
   push:
-    branches: [master, main]
+    branches: [master]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-deploy:
@@ -15,8 +16,21 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install mkdocs mkdocs-material
-      - run: mkdocs build
-      - uses: peaceiris/actions-gh-pages@v3
+      - run: ./scripts/validate-docs.sh
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
+          path: ./site
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: build-deploy
+    environment:
+      name: github-pages
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy documentation
+        uses: actions/deploy-pages@v4

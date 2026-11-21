@@ -1,0 +1,12 @@
+CDL - Cognitive Domain Language Compiler v0.7.0
+Type System with 8 built-in types ready!
+
+Command executed: lint
+CDL v0.7.0 - Linting successful!
+
+Validation scope note:
+- Exit status: 0.
+- This invocation emitted no parser diagnostics for domain.cdl.
+- The current linter validates only implemented symbol/type-name and constraint-string checks.
+- It does not validate applies_to, evidence resolution, currency/unit compatibility, rule priority, exceptions, fallback semantics, verification obligations, or behavioral correctness.
+- The output must not be interpreted as business approval or behavioral equivalence.

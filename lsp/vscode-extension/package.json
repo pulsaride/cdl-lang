@@ -146,11 +146,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lsalihi/cdl-lang.git"
+    "url": "https://github.com/pulsaride/cdl-lang.git"
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/lsalihi/cdl-lang/issues"
+    "url": "https://github.com/pulsaride/cdl-lang/issues"
   },
-  "homepage": "https://lsalihi.github.io/cdl-lang/"
+  "homepage": "https://pulsaride.github.io/cdl-lang/"
 }

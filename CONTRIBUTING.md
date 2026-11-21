@@ -6,7 +6,7 @@ Thank you for your interest in contributing to CDL! This document outlines the p
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/lsalihi/cdl-lang.git
+   git clone https://github.com/pulsaride/cdl-lang.git
    cd cdl-lang
    ```
 

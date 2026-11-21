@@ -1,10 +1,33 @@
-site_name: CDL - Cognitive Domain Language
-site_description: A DSL for defining business logic in a declarative, traceable, and executable way.
-site_author: Pulsar Team
-site_url: https://lsalihi.github.io/cdl-lang/
+site_name: CDL — Compile your business specifications
+site_description: An open-source semantic specification compiler for Spec-Driven Development and AI-assisted software engineering.
+site_author: Pulsaride Team
+site_url: https://pulsaride.github.io/cdl-lang/
 
-repo_name: lsalihi/cdl-lang
-repo_url: https://github.com/lsalihi/cdl-lang
+repo_name: pulsaride/cdl-lang
+repo_url: https://github.com/pulsaride/cdl-lang
+
+nav:
+  - Home: index.md
+  - Getting Started: quickstart.md
+  - Concepts: concepts.md
+  - Language:
+      - v0.6 Reference: spec.md
+      - CLI and Java API: api.md
+      - Diagnostics: diagnostics.md
+  - Architecture:
+      - Compiler Architecture: architecture.md
+      - Semantic IR: sir.md
+      - Supported Capabilities: capabilities.md
+  - SDD and AI:
+      - SDD Integration: sdd-integration.md
+      - AI-Assisted Authoring: ai-authoring.md
+  - Modernization:
+      - Overview: modernization.md
+      - Java: java-modernization.md
+      - TM1: tm1-modernization.md
+  - Examples: examples.md
+  - Roadmap: roadmap.md
+  - Contributing: contributing.md
 
 theme:
   name: material
@@ -18,14 +41,6 @@ theme:
     - navigation.top
     - search.suggest
     - search.highlight
-
-nav:
-  - Home: index.md
-  - Quickstart: quickstart.md
-  - Roadmap: ROADMAP.md
-  - Specification: spec.md
-  - Examples: examples.md
-  - API Reference: api.md
 
 plugins:
   - search

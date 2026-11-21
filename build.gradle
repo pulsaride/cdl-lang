@@ -55,7 +55,7 @@ jar {
 }
 
 group 'com.cdl'
-version '1.0-SNAPSHOT'
+version '0.7.0'
 archivesBaseName = 'cdl'
 
 repositories {
