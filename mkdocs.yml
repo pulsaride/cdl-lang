@@ -27,6 +27,7 @@ nav:
       - TM1: tm1-modernization.md
   - Examples: examples.md
   - Roadmap: roadmap.md
+  - SDD Increments: sdd-increments.md
   - Contributing: contributing.md
 
 theme:

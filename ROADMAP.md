@@ -19,6 +19,8 @@ This roadmap is a proposed migration, not a claim that CDL 2.0 capabilities alre
 
 See `governance/STRATEGIC-DELTA.md` and `ARCHITECTURE.md` for migration details.
 
+Implementation work is decomposed into incremental, testable SDD specifications under [`specs/`](specs/). `ROADMAP.md` remains the source of strategic priority; each increment owns its bounded behavior, acceptance criteria, tasks and verification evidence. The traceability index is maintained in [`specs/TRACEABILITY.md`](specs/TRACEABILITY.md).
+
 ## Priority model
 
 ### P0 — Semantic foundation

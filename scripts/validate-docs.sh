@@ -5,6 +5,18 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cd "$ROOT"
 
 mkdocs build --strict
+./scripts/validate-specs.sh
+
+for required_spec in \
+  specs/README.md \
+  specs/TRACEABILITY.md \
+  specs/templates/INCREMENT.md \
+  specs/increments/p0/P0-001-compatibility-baseline.md; do
+  if [[ ! -s "$required_spec" ]]; then
+    echo "Required SDD specification is missing: $required_spec" >&2
+    exit 1
+  fi
+done
 
 tmp_dir=$(mktemp -d)
 trap 'rm -rf "$tmp_dir"' EXIT
